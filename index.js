@@ -1,22 +1,30 @@
 const dotenv = require('dotenv')
 const express = require('express')
-const app = express()
 const mongoose = require('mongoose')
 const InitDb = require('./init-db')
+const itemRoutes = require('./routes/items');
+const cors = require('cors')
+
+const app = express()
 
 //dotenv
 dotenv.config()
 
 //mongoose connection
 mongoose.connect('mongodb+srv://'+ process.env.USERNAME +':' + process.env.PASSWORD + '@' + process.env.URI).then(()=> {
-    const initDb = new InitDb();
-    initDb.initDb();
+    //init database
+    const initDb = new InitDb()
+    initDb.initDb()
 }).catch((err) => {
     console.log(err)
 })
 
+app.use(cors())
 
-const port = process.env.PORT | 3000
+//routing config
+app.use('/api/v1/items', itemRoutes);
+
+const port = process.env.PORT ||  3000
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log('listening on port ' + port)
 })
