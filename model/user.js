@@ -20,7 +20,9 @@ const schema = new mongoose.Schema(
         }
     }
 )
-
+schema.method('hasSamePasswordWith', function (password) {
+    return bcrypt.compareSync(password, this.password);
+})
 schema.pre('save', function(next) {
     const user = this;
     const saltRounds = 10;
