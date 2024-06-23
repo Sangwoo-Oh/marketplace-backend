@@ -8,7 +8,7 @@ router.get('', async (req, res) => {
 })
 router.get('/:id', async (req, res) => {
     try {
-        result = await Item.findById(req.params.id);
+        result = await Item.findById(req.params.id).populate('category');
         res.json(result);
     } catch (err) {
         res.status(404).send({ error: 'ERROR' })
