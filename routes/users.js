@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../model/user');
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+dotenv.config();
 
 router.post('/sign-in', async (req, res) => {
     const email = req.body.email
@@ -22,8 +24,9 @@ router.post('/sign-in', async (req, res) => {
         return res.status(422).send({ error: 'Wrong password' })
     }
     const token = jwt.sign({
-        data: 'foobar'
-    }, 'secret', { expiresIn: '1h' });
+        user_id: foundUser.id,
+        username: foundUser.username
+    }, process.env.JWT_KEY, { expiresIn: '1h' });
 
     return res.json(token);
 })
