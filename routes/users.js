@@ -34,7 +34,7 @@ router.post('/sign-up', async (req, res) => {
     const username = req.body.username
     const email = req.body.email
     const password = req.body.password
-    const confirmPassword = req.body.confirmPassword
+    const confirmPassword = req.body.password_confirm
 
     if (!username) {
         return res.status(422).send({ error: 'Please fill the username' })
@@ -44,6 +44,9 @@ router.post('/sign-up', async (req, res) => {
     }
     if (!password) {
         return res.status(422).send({ error: 'Please fill the password' })
+    }
+    if (!confirmPassword) {
+        return res.status(422).send({ error: 'Please fill the password(confirm)' })
     }
     if (password !== confirmPassword) {
         return res.status(422).send({ error: 'password did not match with confirmPassword' })
