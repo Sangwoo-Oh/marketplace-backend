@@ -7,15 +7,12 @@ class InitDb {
     constructor() {
         this.categories = [
             {
-                // _id: new mongoose.Types.ObjectId(),
                 name: "Japanese"
             },
             {
-                // _id: new mongoose.Types.ObjectId(),
                 name: "Korean"
             },
             {
-                // _id: new mongoose.Types.ObjectId(),
                 name: "Chinese"
             }
         ]
@@ -27,7 +24,7 @@ class InitDb {
                 category: "test_category",
                 description: "test_description",
                 price: 1000,
-                image_url: "assets/placeholder.jpeg",
+                image_url: "https://marketplace-app-s3.s3.amazonaws.com/iphone13.jpg",
             },
             {
                 // _id: new mongoose.Types.ObjectId(),
@@ -36,7 +33,7 @@ class InitDb {
                 category: "test_category",
                 description: "test_description",
                 price: 1000,
-                image_url: "assets/placeholder.jpeg",
+                image_url: "https://marketplace-app-s3.s3.amazonaws.com/iphone13.jpg",
             },
             {
                 // _id: new mongoose.Types.ObjectId(),
@@ -45,7 +42,7 @@ class InitDb {
                 category: "test_category",
                 description: "test_description",
                 price: 1000,
-                image_url: "assets/placeholder.jpeg",
+                image_url: "https://marketplace-app-s3.s3.amazonaws.com/iphone13.jpg",
             },
             {
                 // _id: new mongoose.Types.ObjectId(),
@@ -54,7 +51,7 @@ class InitDb {
                 category: "test_category",
                 description: "test_description",
                 price: 1000,
-                image_url: "assets/placeholder.jpeg",
+                image_url: "https://marketplace-app-s3.s3.amazonaws.com/iphone13.jpg",
             }
         ]
     }
@@ -74,15 +71,6 @@ class InitDb {
             const newCategory = new Category(category)
             newCategory.save()
             this.items.forEach((item) => {
-                // const newItem = new Item({
-                //     _id: new mongoose.Types.ObjectId(),
-                //     public_date: item.publish_date,
-                //     name: item.name,
-                //     category: newCategory._id,
-                //     description: item.description,
-                //     price: item.price,
-                //     image_url: item.image_url
-                // })
                 const newItem = new Item(item)
                 newItem.category = newCategory._id
                 newItem.save()
