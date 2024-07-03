@@ -10,8 +10,17 @@ const upload = multer();
 dotenv.config();
 
 
-router.get('', async (req, res) => {
-    result = await Item.find({});
+router.get('', UserController.getItemsMiddleware, async (req, res) => {
+    const user = res.locals.user;
+    if(!user) {
+        result = await Item.find({});
+    } else {
+        result = await Item.find({
+            seller: {
+                $ne: user._id
+            }
+        });
+    }
     res.json(result);
 })
 router.get('/:id', UserController.authMiddleware ,async (req, res) => {
@@ -22,7 +31,7 @@ router.get('/:id', UserController.authMiddleware ,async (req, res) => {
         res.status(404).send({ error: 'ERROR' })
     }
 })
-router.post('/item', UserController.createItemMiddleware, upload.single('file'), async (req, res) => {
+router.post('/item', UserController.authMiddleware, upload.single('file'), async (req, res) => {
     // console.log("req.file", req.file);
     // console.log("req.body", req.body);
 
@@ -40,7 +49,7 @@ router.post('/item', UserController.createItemMiddleware, upload.single('file'),
         const category = new ObjectId(req.body.category);
         const description = req.body.description;
         const price = req.body.price;
-        const seller = new ObjectId(res.locals.user_id);
+        const seller = new ObjectId(res.locals.user._id);
 
         const newItem = new Item({
             public_date,
