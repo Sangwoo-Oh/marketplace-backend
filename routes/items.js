@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const Item = require('../model/item');
+const {ObjectId} = require('mongodb');
 const UserController = require('../controllers/user');
-const {ObjectId} = require('mongodb')
 const dotenv = require('dotenv');
 const { PutObjectCommand, S3Client } = require("@aws-sdk/client-s3");
 const multer  = require('multer');
 const upload = multer();
 dotenv.config();
+const jwt = require('jsonwebtoken');
+const User = require('../model/user');
 
 
 router.get('', async (req, res) => {
@@ -16,15 +18,15 @@ router.get('', async (req, res) => {
 })
 router.get('/:id', UserController.authMiddleware ,async (req, res) => {
     try {
-        result = await Item.findById(req.params.id).populate('category');
+        result = await Item.findById(req.params.id).populate('category').populate('seller');
         res.json(result);
     } catch (err) {
         res.status(404).send({ error: 'ERROR' })
     }
 })
-router.post('/item', upload.single('file'), async (req, res) => {
-    console.log("req.file", req.file);
-    console.log("req.body", req.body);
+router.post('/item', UserController.createItemMiddleware, upload.single('file'), async (req, res) => {
+    // console.log("req.file", req.file);
+    // console.log("req.body", req.body);
 
     const config = {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -40,6 +42,7 @@ router.post('/item', upload.single('file'), async (req, res) => {
         const category = new ObjectId(req.body.category);
         const description = req.body.description;
         const price = req.body.price;
+        const seller = new ObjectId(res.locals.user_id);
 
         const newItem = new Item({
             public_date,
@@ -47,6 +50,7 @@ router.post('/item', upload.single('file'), async (req, res) => {
             category,
             description,
             price,
+            seller,
         })
         newItem.image_url = 'https://marketplace-app-s3.s3.amazonaws.com/' + newItem._id + '.png';
         newItem.save();
