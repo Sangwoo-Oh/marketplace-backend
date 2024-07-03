@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Item = require('../model/item');
 const {ObjectId} = require('mongodb');
-const UserController = require('../controllers/user');
+const UserMiddleware = require('../middleware/user');
 const dotenv = require('dotenv');
 const { PutObjectCommand, S3Client } = require("@aws-sdk/client-s3");
 const multer  = require('multer');
@@ -10,7 +10,7 @@ const upload = multer();
 dotenv.config();
 
 
-router.get('', UserController.getItemsMiddleware, async (req, res) => {
+router.get('', UserMiddleware.getItemsMiddleware, async (req, res) => {
     const user = res.locals.user;
     if(!user) {
         result = await Item.find({});
@@ -23,7 +23,7 @@ router.get('', UserController.getItemsMiddleware, async (req, res) => {
     }
     res.json(result);
 })
-router.get('/:id', UserController.authMiddleware ,async (req, res) => {
+router.get('/:id', UserMiddleware.authMiddleware ,async (req, res) => {
     try {
         result = await Item.findById(req.params.id).populate('category').populate('seller');
         res.json(result);
@@ -31,10 +31,7 @@ router.get('/:id', UserController.authMiddleware ,async (req, res) => {
         res.status(404).send({ error: 'ERROR' })
     }
 })
-router.post('/item', UserController.authMiddleware, upload.single('file'), async (req, res) => {
-    // console.log("req.file", req.file);
-    // console.log("req.body", req.body);
-
+router.post('/item', UserMiddleware.authMiddleware, upload.single('file'), async (req, res) => {
     const config = {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
