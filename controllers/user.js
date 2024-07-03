@@ -40,7 +40,7 @@ exports.createItemMiddleware = function(req, res, next) {
             if(!foundUser) {
                 return res.status(401).send({ error: 'Not Authorized, invalid token, user not found' });
             }
-            res.locals.user_id = foundUser.user_id;
+            res.locals.user_id = foundUser._id;
         } catch (err) {
             return res.status(401).send({ error: 'Not Authorized, invalid token' });
         }

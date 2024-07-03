@@ -8,8 +8,6 @@ const { PutObjectCommand, S3Client } = require("@aws-sdk/client-s3");
 const multer  = require('multer');
 const upload = multer();
 dotenv.config();
-const jwt = require('jsonwebtoken');
-const User = require('../model/user');
 
 
 router.get('', async (req, res) => {
