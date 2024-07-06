@@ -7,6 +7,6 @@ exports.purchaseItem = async (req, res) => {
         const result = await purchaseService.purchaseItem(userId, itemId);
         return res.json(result);
     } catch (err) {
-        res.status(401).send({"error": err.message});
+        res.status(400).send({"error": err.message});
     }
 }
