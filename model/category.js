@@ -3,7 +3,6 @@ const { Schema } = mongoose;
 
 const schema = new mongoose.Schema(
     {
-        // _id: Schema.Types.ObjectId,
         name: String
     }
 );

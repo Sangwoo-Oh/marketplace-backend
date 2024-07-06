@@ -3,12 +3,12 @@ const { Schema } = mongoose;
 
 const schema = new mongoose.Schema(
     {
-        // _id: Schema.Types.ObjectId,
         public_date: Date,
         name: String,
         category: { type: Schema.Types.ObjectId, ref: 'Category' },
         description: String,
         price: Number,
+        seller: { type: Schema.Types.ObjectId, ref: 'User' },
         image_url: String
     }
 );

@@ -1,9 +1,8 @@
+const config = require('../config/config');
 const express = require('express');
 const router = express.Router();
 const User = require('../model/user');
 const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
-dotenv.config();
 
 router.post('/sign-in', async (req, res) => {
     const email = req.body.email
@@ -26,7 +25,7 @@ router.post('/sign-in', async (req, res) => {
     const token = jwt.sign({
         user_id: foundUser.id,
         username: foundUser.username
-    }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    }, config.JWT_SECRET, { expiresIn: '1h' });
 
     return res.json(token);
 })

@@ -1,11 +1,13 @@
+const config = require('./config/config');
 const mongoose = require('mongoose');
+
+mongoose.connect('mongodb+srv://'+ config.USERNAME +':' + config.PASSWORD + '@' + config.URI).then(()=>{console.log('successful connection!')}).catch((err)=>{console.log(err)});
+
 const Item = require("./model/item");
 const Category = require("./model/category");
 
-class InitDb {
-    constructor() {}
-
-    async initDb() {
+class Seed {
+    async seedData() {
         await this.cleanDb();
         this.generateItem();
     }
@@ -49,4 +51,5 @@ class InitDb {
     }
 }
 
-module.exports = InitDb;
+const seed = new Seed();
+seed.seedData();
