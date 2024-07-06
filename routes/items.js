@@ -8,7 +8,6 @@ const { PutObjectCommand, S3Client } = require("@aws-sdk/client-s3");
 const multer  = require('multer');
 const upload = multer();
 
-
 router.get('', UserMiddleware.getItemsMiddleware, async (req, res) => {
     const user = res.locals.user;
     if(!user) {

@@ -9,7 +9,8 @@ const schema = new mongoose.Schema(
         description: String,
         price: Number,
         seller: { type: Schema.Types.ObjectId, ref: 'User' },
-        image_url: String
+        image_url: String,
+        is_purchased: { type: Boolean, default: false }
     }
 );
 module.exports = mongoose.model('Item', schema);

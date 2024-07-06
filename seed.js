@@ -5,6 +5,7 @@ mongoose.connect('mongodb+srv://'+ config.USERNAME +':' + config.PASSWORD + '@' 
 
 const Item = require("./model/item");
 const Category = require("./model/category");
+const Purchase = require("./model/purchase");
 
 class Seed {
     async seedData() {
@@ -13,6 +14,7 @@ class Seed {
     }
 
     async cleanDb() {
+        await Purchase.deleteMany();
         await Item.deleteMany();
         await Category.deleteMany();
     }
