@@ -1,7 +1,6 @@
+const config = require('../config/config')
 const jwt = require('jsonwebtoken');
 const User = require('../model/user');
-const dotenv = require('dotenv');
-dotenv.config();
 
 exports.authMiddleware = function(req, res, next) {
     const token = req.headers.authorization
@@ -9,7 +8,7 @@ exports.authMiddleware = function(req, res, next) {
         return res.status(401).send({ error: 'Not Authorized, you need to login' });
     }
 
-    jwt.verify(token.split(' ')[1], process.env.JWT_SECRET, async function(err, decodedToken) {
+    jwt.verify(token.split(' ')[1], config.JWT_SECRET, async function(err, decodedToken) {
         if (err) {
             return res.status(401).send({ error: 'Not Authorized, invalid token' });
         }
@@ -31,7 +30,7 @@ exports.getItemsMiddleware = function(req, res, next) {
     if(!token) {
         next();
     } else {
-        jwt.verify(token.split(' ')[1], process.env.JWT_SECRET, async function(err, decodedToken) {
+        jwt.verify(token.split(' ')[1], config.JWT_SECRET, async function(err, decodedToken) {
             if (err) {
                 return res.status(401).send({ error: 'Not Authorized, invalid token' });
             }

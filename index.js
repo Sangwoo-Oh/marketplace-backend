@@ -1,4 +1,4 @@
-const dotenv = require('dotenv')
+const config = require('./config/config')
 const express = require('express')
 const mongoose = require('mongoose')
 const InitDb = require('./init-db')
@@ -9,17 +9,10 @@ const cors = require('cors')
 
 const app = express()
 
-//dotenv
-dotenv.config()
-
 //mongoose connection
-mongoose.connect('mongodb+srv://'+ process.env.USERNAME +':' + process.env.PASSWORD + '@' + process.env.URI).then(()=> {
-    //init database
-    const initDb = new InitDb()
-    initDb.initDb()
-}).catch((err) => {
-    console.log(err)
-})
+mongoose.connect('mongodb+srv://'+ config.USERNAME +':' + config.PASSWORD + '@' + config.URI).catch((err) => {
+    console.error(err);
+});
 
 app.use(cors())
 app.use(express.json())
@@ -29,7 +22,7 @@ app.use('/api/v1/users', userRoutes)
 app.use('/api/v1/items', itemRoutes)
 app.use('/api/v1/categories', categoryRoutes)
 
-const port = process.env.PORT ||  3000
+const port = config.PORT ||  3000
 app.listen(port, () => {
     console.log('listening on port ' + port)
 })

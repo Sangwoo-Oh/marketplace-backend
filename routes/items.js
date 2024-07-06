@@ -1,13 +1,12 @@
+const config = require('../config/config');
 const express = require('express');
 const router = express.Router();
 const Item = require('../model/item');
 const {ObjectId} = require('mongodb');
 const UserMiddleware = require('../middleware/user');
-const dotenv = require('dotenv');
 const { PutObjectCommand, S3Client } = require("@aws-sdk/client-s3");
 const multer  = require('multer');
 const upload = multer();
-dotenv.config();
 
 
 router.get('', UserMiddleware.getItemsMiddleware, async (req, res) => {
@@ -32,13 +31,13 @@ router.get('/:id', UserMiddleware.authMiddleware ,async (req, res) => {
     }
 })
 router.post('/item', UserMiddleware.authMiddleware, upload.single('file'), async (req, res) => {
-    const config = {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        region: process.env.AWS_S3_REGION,
+    const configuration = {
+        accessKeyId: config.AWS_ACCESS_KEY_ID,
+        secretAccessKey: config.AWS_SECRET_ACCESS_KEY,
+        region: config.AWS_S3_REGION,
     };
 
-    const client = new S3Client(config);
+    const client = new S3Client(configuration);
 
     try {
         const public_date = new Date(2024 / 1 / 1);
