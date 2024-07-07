@@ -6,7 +6,7 @@ const multer  = require('multer');
 const upload = multer();
 
 router.get('', getItemsMiddleware, itemController.getAllItems);
-router.get('/:id', authMiddleware ,itemController.getItemById);
+router.get('/:id' ,itemController.getItemById);
 router.post('/item', authMiddleware, upload.single('file'), itemController.createItem);
 
 module.exports = router;
