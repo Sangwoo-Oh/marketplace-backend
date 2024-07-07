@@ -1,6 +1,7 @@
 const config = require('../config/config');
 const Item = require('../model/item');
 const { PutObjectCommand, S3Client } = require("@aws-sdk/client-s3");
+const sharp = require('sharp');
 
 exports.getAllItems = async (user) => {
     if(!user) {
@@ -40,11 +41,11 @@ exports.createItem = async (data) => {
     })
     newItem.image_url = 'https://marketplace-app-s3.s3.amazonaws.com/' + newItem._id + '.png';
     newItem.save();
-
+    const buffer = await sharp(data['buffer']).resize( {width: 640, height: 480}).png().toBuffer()
     const command = new PutObjectCommand({
         Bucket: "marketplace-app-s3",
         Key: newItem._id + '.png',
-        Body: data['buffer'],
+        Body: buffer,
         ContentType: data['mimetype'],
     });
     await client.send(command);
