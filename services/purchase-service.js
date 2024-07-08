@@ -1,6 +1,17 @@
 const Item = require('../model/item');
 const Purchase = require('../model/purchase');
 
+
+exports.getPurchasedItems = async (userId) => {
+    if (!userId) throw new Error("User not found!");
+    const purchases = await Purchase.find({buyer: userId});
+    const items = await Promise.all(
+        purchases.map(async (purchase)=> {
+            return await Item.findById(purchase.item);
+        })
+    );
+    return items;
+}
 exports.purchaseItem = async (userId, itemId) => {
     if (!userId) throw new Error("User not found!");
 

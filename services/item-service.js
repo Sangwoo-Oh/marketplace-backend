@@ -4,15 +4,7 @@ const { PutObjectCommand, S3Client } = require("@aws-sdk/client-s3");
 const sharp = require('sharp');
 
 exports.getAllItems = async (user) => {
-    if(!user) {
-        result = await Item.find({});
-    } else {
-        result = await Item.find({
-            seller: {
-                $ne: user._id
-            }
-        });
-    }
+    result = await Item.find({});
     return result;
 }
 
