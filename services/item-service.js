@@ -9,13 +9,13 @@ exports.getAllItems = async (user) => {
 }
 
 exports.getItemById = async (itemId) => {
-    const item = await Item.findById(itemId).populate('category').populate('seller');
+    const item = await Item.findById(itemId).populate('seller');
     if (!item) throw new Error('Item not found');
     return item;
 }
 
 exports.getItemsByUserId = async (userId) => {
-    const item = await Item.find({seller: userId}).populate('category');
+    const item = await Item.find({seller: userId});
     return item;
 }
 
@@ -31,7 +31,6 @@ exports.createItem = async (data) => {
     const newItem = new Item({
         public_date: data.public_date,
         name: data.name,
-        category: data.category,
         description: data.description,
         price: data.price,
         seller: data.seller,
