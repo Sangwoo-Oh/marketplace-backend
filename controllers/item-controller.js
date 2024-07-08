@@ -20,6 +20,16 @@ exports.getItemById = async (req, res) => {
     }
 }
 
+exports.getItemByUserId = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const result = await itemService.getItemsByUserId(userId);
+        res.json(result);
+    } catch (err) {
+        res.status(404).send({"error": err.message});
+    }
+}
+
 exports.createItem = async (req, res) => {
     try {
         const data = {

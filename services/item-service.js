@@ -22,6 +22,11 @@ exports.getItemById = async (itemId) => {
     return item;
 }
 
+exports.getItemsByUserId = async (userId) => {
+    const item = await Item.find({seller: userId}).populate('category');
+    return item;
+}
+
 exports.createItem = async (data) => {
     const configuration = {
         accessKeyId: config.AWS_ACCESS_KEY_ID,
