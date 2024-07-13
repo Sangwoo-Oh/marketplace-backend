@@ -32,7 +32,7 @@ class Seed {
             public_data: new Date(2024, 7, 3),
             name: 'iPhone13',
             category: apple._id,
-            description: 'But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects,',
+            description: 'The iPhone 13 is a flagship smartphone by Apple, featuring a stunning Super Retina XDR display, advanced A15 Bionic chip, and improved dual-camera system for exceptional photo and video quality. With 5G capability, longer battery life, and enhanced durability, it offers a premium experience for both everyday use and high-performance tasks.',
             price: 10000,
             seller: new mongoose.Types.ObjectId('668170feaad528c8c2191628'),
             image_url: 'https://marketplace-app-s3.s3.amazonaws.com/seed/iphone13.jpg'
@@ -41,7 +41,7 @@ class Seed {
             public_data: new Date(2024, 7, 1),
             name: 'MacBook',
             category: apple._id,
-            description: 'But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects,',
+            description: 'The MacBook is a sleek and powerful laptop designed by Apple, known for its high-resolution Retina display, long battery life, and robust performance. Equipped with the latest M1 chip, it offers seamless multitasking, fast processing speeds, and superior graphics. Perfect for professionals and students alike, it combines portability with advanced technology.',
             price: 30000,
             seller: new mongoose.Types.ObjectId('66851818b7c1219d3f54d439'),
             image_url: 'https://marketplace-app-s3.s3.amazonaws.com/seed/macbook.jpg'
@@ -50,7 +50,7 @@ class Seed {
             public_data: new Date(2024, 7, 1),
             name: 'Galaxy A 15',
             category: samsung._id,
-            description: 'But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects,',
+            description: 'The Galaxy A 15 is a cutting-edge Android smartphone featuring a vibrant 6.5-inch display, powerful battery, and advanced camera system. With a fast processor and ample storage, it delivers smooth performance. This stylish and reliable device meets all your everyday needs effortlessly.',
             price: 8000,
             seller: new mongoose.Types.ObjectId('668170feaad528c8c2191628'),
             image_url: 'https://marketplace-app-s3.s3.amazonaws.com/seed/galaxy.jpg'
