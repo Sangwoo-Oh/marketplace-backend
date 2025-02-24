@@ -43,6 +43,7 @@ exports.createItem = async (data) => {
         Key: newItem._id + '.png',
         Body: buffer,
         ContentType: data['mimetype'],
+        ACL: 'public-read'
     });
     await client.send(command);
     return newItem;
